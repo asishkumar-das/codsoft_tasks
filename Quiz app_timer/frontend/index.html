@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Quiz Application</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- HEADER -->
+        <div class="header">
+            <h1>Quiz Application</h1>
+            <p>Test Your Knowledge</p>
+        </div>
+
+        <!-- START SCREEN -->
+        <div id="startScreen" class="screen">
+
+            <h2>Welcome to the Quiz</h2>
+
+            <p>
+                Total Questions:
+                <b>5</b>
+            </p>
+
+            <p>
+                Time Per Question:
+                <b>10 Seconds</b>
+            </p>
+
+            <button onclick="startQuiz()" class="btn">
+                Start Quiz
+            </button>
+
+        </div>
+
+
+        <!-- QUIZ SCREEN -->
+        <div id="quizScreen" class="screen hidden">
+
+            <div class="quiz-top">
+
+                <span id="questionNumber">
+                    Question 1 of 5
+                </span>
+
+                <span id="timer">
+                    10
+                </span>
+
+            </div>
+
+
+            <div class="progress-container">
+                <div id="progressBar"></div>
+            </div>
+
+
+            <h2 id="question">
+                Question will appear here
+            </h2>
+
+
+            <div id="options">
+
+                <!-- Options will be added using JavaScript -->
+
+            </div>
+
+
+            <button onclick="submitAnswer()" class="btn">
+                Submit Answer
+            </button>
+
+            <p id="message"></p>
+
+        </div>
+
+
+        <!-- RESULT SCREEN -->
+        <div id="resultScreen" class="screen hidden">
+
+            <h2>Quiz Completed 🎉</h2>
+
+            <div class="result-box">
+
+                <h3>Your Score</h3>
+
+                <div id="finalScore">
+                    0 / 5
+                </div>
+
+                <p id="percentage">
+                    0%
+                </p>
+
+            </div>
+
+
+            <h3>Answer Summary</h3>
+
+            <div id="summary">
+
+                <!-- Summary will appear here -->
+
+            </div>
+
+
+            <button onclick="restartQuiz()" class="btn">
+                Restart Quiz
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

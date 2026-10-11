@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Grade Calculator</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="header">
+            <div class="icon">📊</div>
+
+            <h1>Student Grade Calculator</h1>
+
+            <p>Enter marks obtained in each subject</p>
+        </div>
+
+
+        <div class="card">
+
+            <h2>Enter Marks</h2>
+
+            <div class="subjects">
+
+                <div class="subject">
+                    <label>Subject 1</label>
+                    <input type="number" id="subject1"
+                           min="0" max="100"
+                           placeholder="0 - 100">
+                </div>
+
+                <div class="subject">
+                    <label>Subject 2</label>
+                    <input type="number" id="subject2"
+                           min="0" max="100"
+                           placeholder="0 - 100">
+                </div>
+
+                <div class="subject">
+                    <label>Subject 3</label>
+                    <input type="number" id="subject3"
+                           min="0" max="100"
+                           placeholder="0 - 100">
+                </div>
+
+                <div class="subject">
+                    <label>Subject 4</label>
+                    <input type="number" id="subject4"
+                           min="0" max="100"
+                           placeholder="0 - 100">
+                </div>
+
+                <div class="subject">
+                    <label>Subject 5</label>
+                    <input type="number" id="subject5"
+                           min="0" max="100"
+                           placeholder="0 - 100">
+                </div>
+
+            </div>
+
+
+            <button id="calculateButton">
+                CALCULATE RESULT
+            </button>
+
+
+            <div id="message"></div>
+
+
+            <div class="result" id="result">
+
+                <div class="result-box">
+                    <span>Total Marks</span>
+                    <strong id="total">0 / 500</strong>
+                </div>
+
+                <div class="result-box">
+                    <span>Average Percentage</span>
+                    <strong id="percentage">0%</strong>
+                </div>
+
+                <div class="result-box grade-box">
+                    <span>Grade</span>
+                    <strong id="grade">-</strong>
+                </div>
+
+            </div>
+
+
+            <button id="resetButton" class="reset">
+                🔄 Reset
+            </button>
+
+        </div>
+
+
+        <footer>
+            Grade Calculator • Java Backend Project
+        </footer>
+
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

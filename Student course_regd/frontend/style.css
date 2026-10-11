@@ -1,0 +1,163 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f1f5f9;
+    color: #1e293b;
+}
+
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 30px auto;
+}
+
+header {
+    background: linear-gradient(135deg, #2563eb, #1e40af);
+    color: white;
+    text-align: center;
+    padding: 30px;
+    border-radius: 15px;
+    margin-bottom: 25px;
+}
+
+header h1 {
+    margin-bottom: 8px;
+}
+
+.student-box {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    margin-bottom: 25px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.student-box label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.student-input {
+    display: flex;
+    gap: 10px;
+}
+
+input {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+button {
+    border: none;
+    padding: 12px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #2563eb;
+    color: white;
+    font-weight: bold;
+}
+
+button:hover {
+    background: #1d4ed8;
+}
+
+#studentMessage {
+    margin-top: 12px;
+    font-weight: bold;
+}
+
+section h2 {
+    margin-bottom: 15px;
+}
+
+.course-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 18px;
+    margin-bottom: 30px;
+}
+
+.course-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.course-card h3 {
+    color: #2563eb;
+    margin-bottom: 8px;
+}
+
+.course-card p {
+    margin: 8px 0;
+    line-height: 1.5;
+}
+
+.course-code {
+    font-weight: bold;
+    color: #475569;
+}
+
+.slots {
+    font-weight: bold;
+}
+
+.register-btn {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.registered-container {
+    display: grid;
+    gap: 12px;
+}
+
+.registered-card {
+    background: white;
+    padding: 18px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+}
+
+.drop-btn {
+    background: #dc2626;
+}
+
+.drop-btn:hover {
+    background: #b91c1c;
+}
+
+.success {
+    color: #16a34a;
+}
+
+.error {
+    color: #dc2626;
+}
+
+@media (max-width: 600px) {
+
+    .student-input {
+        flex-direction: column;
+    }
+
+    .registered-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+}

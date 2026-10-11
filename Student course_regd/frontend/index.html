@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Course Registration</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1>🎓 Student Course Registration</h1>
+            <p>Register and manage your courses easily</p>
+        </header>
+
+        <!-- Student Section -->
+        <section class="student-box">
+
+            <label>Student ID</label>
+
+            <div class="student-input">
+                <input type="number" id="studentId" placeholder="Enter Student ID">
+                <button onclick="loadStudent()">Load Student</button>
+            </div>
+
+            <p id="studentMessage"></p>
+
+        </section>
+
+        <!-- Courses -->
+        <section>
+
+            <h2>📚 Available Courses</h2>
+
+            <div id="courseContainer" class="course-container">
+                <p>Enter Student ID and click Load Student.</p>
+            </div>
+
+        </section>
+
+        <!-- Registered Courses -->
+        <section>
+
+            <h2>📝 My Registered Courses</h2>
+
+            <div id="registeredContainer" class="registered-container">
+                <p>No courses registered.</p>
+            </div>
+
+        </section>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ATM Interface</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+    <header class="header">
+
+        <div class="atm-icon">🏧</div>
+
+        <h1>ATM Interface</h1>
+
+        <p>Secure Banking System</p>
+
+    </header>
+
+
+    <!-- ATM CARD -->
+    <main class="atm-card">
+
+        <!-- BALANCE -->
+        <div class="balance-card">
+
+            <span>AVAILABLE BALANCE</span>
+
+            <h2 id="balance">₹10,000.00</h2>
+
+        </div>
+
+
+        <!-- MENU -->
+        <div class="menu">
+
+            <button onclick="showSection('withdraw')">
+                💸 Withdraw
+            </button>
+
+            <button onclick="showSection('deposit')">
+                💰 Deposit
+            </button>
+
+            <button onclick="checkBalance()">
+                💳 Check Balance
+            </button>
+
+        </div>
+
+
+        <!-- WITHDRAW -->
+        <section id="withdraw" class="operation hidden">
+
+            <h2>Withdraw Money</h2>
+
+            <p>Enter the amount you want to withdraw</p>
+
+            <input
+                type="number"
+                id="withdrawAmount"
+                placeholder="Enter amount"
+                min="1"
+            >
+
+            <button
+                class="primary"
+                onclick="withdraw()"
+            >
+                WITHDRAW
+            </button>
+
+        </section>
+
+
+        <!-- DEPOSIT -->
+        <section id="deposit" class="operation hidden">
+
+            <h2>Deposit Money</h2>
+
+            <p>Enter the amount you want to deposit</p>
+
+            <input
+                type="number"
+                id="depositAmount"
+                placeholder="Enter amount"
+                min="1"
+            >
+
+            <button
+                class="primary"
+                onclick="deposit()"
+            >
+                DEPOSIT
+            </button>
+
+        </section>
+
+
+        <!-- MESSAGE -->
+        <div id="message" class="message">
+            Select an operation to continue.
+        </div>
+
+
+        <!-- TRANSACTION HISTORY -->
+        <div class="history">
+
+            <h3>Transaction Status</h3>
+
+            <p id="transaction">
+                No transaction yet.
+            </p>
+
+        </div>
+
+
+        <!-- RESET -->
+        <button
+            class="reset"
+            onclick="resetATM()"
+        >
+            🔄 Reset Account
+        </button>
+
+    </main>
+
+
+    <footer>
+        ATM Interface • Java Backend Project
+    </footer>
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+
+</html>

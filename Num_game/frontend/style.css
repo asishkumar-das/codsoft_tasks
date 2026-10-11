@@ -1,0 +1,472 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+
+    min-height: 100vh;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0f172a,
+            #1e3a8a,
+            #312e81
+        );
+
+    color: #1e293b;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 30px 15px;
+}
+
+
+/* ================= CONTAINER ================= */
+
+.container {
+    width: 100%;
+    max-width: 650px;
+}
+
+
+/* ================= HEADER ================= */
+
+.header {
+    text-align: center;
+    color: white;
+
+    margin-bottom: 25px;
+}
+
+.game-icon {
+    font-size: 45px;
+
+    margin-bottom: 8px;
+}
+
+.header h1 {
+    font-size: 34px;
+
+    font-weight: 700;
+
+    margin-bottom: 8px;
+}
+
+.header p {
+    font-size: 15px;
+
+    color: #cbd5e1;
+}
+
+.header strong {
+    color: white;
+}
+
+
+/* ================= GAME CARD ================= */
+
+.game-card {
+    background: #ffffff;
+
+    border-radius: 22px;
+
+    padding: 25px;
+
+    box-shadow:
+        0 25px 60px rgba(0, 0, 0, 0.35);
+}
+
+
+/* ================= STATS ================= */
+
+.stats {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 12px;
+
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background: #f8fafc;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 14px;
+
+    padding: 15px;
+
+    text-align: center;
+}
+
+.stat-title {
+    display: block;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    color: #64748b;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 6px;
+}
+
+.stat-value {
+    display: block;
+
+    font-size: 22px;
+
+    font-weight: 700;
+
+    color: #2563eb;
+}
+
+
+/* ================= GAME AREA ================= */
+
+.game-area {
+    text-align: center;
+
+    padding: 5px 10px 25px;
+}
+
+.game-area h2 {
+    font-size: 23px;
+
+    margin-bottom: 8px;
+
+    color: #0f172a;
+}
+
+.instruction {
+    color: #64748b;
+
+    font-size: 14px;
+
+    margin-bottom: 22px;
+}
+
+
+/* ================= INPUT ================= */
+
+.input-area {
+    display: flex;
+
+    gap: 10px;
+
+    max-width: 450px;
+
+    margin: auto;
+}
+
+#guessInput {
+    flex: 1;
+
+    min-width: 0;
+
+    height: 52px;
+
+    border: 2px solid #e2e8f0;
+
+    border-radius: 11px;
+
+    padding: 0 15px;
+
+    font-size: 17px;
+
+    text-align: center;
+
+    outline: none;
+
+    transition: 0.2s;
+}
+
+#guessInput:focus {
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+
+/* ================= GUESS BUTTON ================= */
+
+#guessButton {
+    width: 125px;
+
+    height: 52px;
+
+    border: none;
+
+    border-radius: 11px;
+
+    background: #2563eb;
+
+    color: white;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+#guessButton:hover {
+    background: #1d4ed8;
+
+    transform: translateY(-1px);
+}
+
+#guessButton:disabled {
+    background: #94a3b8;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+
+/* ================= MESSAGE ================= */
+
+.message-box {
+    min-height: 60px;
+
+    margin: 20px auto;
+
+    padding: 14px;
+
+    border-radius: 12px;
+
+    background: #f8fafc;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+#messageIcon {
+    font-size: 20px;
+}
+
+#message {
+    font-size: 15px;
+
+    font-weight: 600;
+
+    color: #475569;
+}
+
+
+/* ================= PROGRESS ================= */
+
+.progress-section {
+    max-width: 450px;
+
+    margin: 0 auto 25px;
+}
+
+.progress-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-bottom: 8px;
+
+    font-size: 12px;
+
+    color: #64748b;
+}
+
+.progress-bar {
+    height: 8px;
+
+    background: #e2e8f0;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+
+    width: 0%;
+
+    background: #2563eb;
+
+    border-radius: 20px;
+
+    transition: width 0.3s ease;
+}
+
+
+/* ================= BUTTONS ================= */
+
+.button-area {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    flex-wrap: wrap;
+}
+
+.new-round-button,
+.reset-button {
+    padding: 11px 20px;
+
+    border-radius: 10px;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.new-round-button {
+    border: none;
+
+    background: #2563eb;
+
+    color: white;
+}
+
+.new-round-button:hover {
+    background: #1d4ed8;
+}
+
+.reset-button {
+    border: 1px solid #cbd5e1;
+
+    background: white;
+
+    color: #475569;
+}
+
+.reset-button:hover {
+    background: #f8fafc;
+}
+
+
+/* ================= INFO ================= */
+
+.info-section {
+    border-top: 1px solid #e2e8f0;
+
+    padding-top: 20px;
+
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 12px;
+}
+
+.info-item {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 10px;
+
+    border-radius: 10px;
+
+    background: #f8fafc;
+}
+
+.info-item > span {
+    font-size: 20px;
+}
+
+.info-item strong {
+    display: block;
+
+    font-size: 12px;
+
+    color: #334155;
+}
+
+.info-item p {
+    font-size: 10px;
+
+    color: #64748b;
+
+    margin-top: 3px;
+}
+
+
+/* ================= FOOTER ================= */
+
+footer {
+    text-align: center;
+
+    margin-top: 20px;
+
+    color: #cbd5e1;
+
+    font-size: 12px;
+}
+
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 550px) {
+
+    body {
+        padding: 20px 10px;
+    }
+
+    .header h1 {
+        font-size: 27px;
+    }
+
+    .game-card {
+        padding: 18px;
+    }
+
+    .stats {
+        gap: 7px;
+    }
+
+    .stat-card {
+        padding: 12px 5px;
+    }
+
+    .stat-value {
+        font-size: 18px;
+    }
+
+    .input-area {
+        flex-direction: column;
+    }
+
+    #guessButton {
+        width: 100%;
+    }
+
+    .info-section {
+        grid-template-columns: 1fr;
+    }
+}
