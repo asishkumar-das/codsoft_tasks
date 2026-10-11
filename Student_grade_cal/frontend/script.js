@@ -2,7 +2,7 @@
 // GRADE CALCULATOR - FRONTEND
 // ============================================
 
-const API_URL = "http://localhost:8080";
+const API_URL = "http://localhost:8082";
 
 // HTML ELEMENTS
 const calculateButton = document.getElementById("calculateButton");

@@ -5,368 +5,198 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
+import java.util.Locale;
 
 public class GradeCalculatorServer {
 
-    private static final int PORT = 8080;
+    private static final int PORT = 8082;
 
     public static void main(String[] args) throws Exception {
 
-        HttpServer server =
-                HttpServer.create(
-                        new InetSocketAddress(PORT),
-                        0
-                );
+        HttpServer server = HttpServer.create(
+                new InetSocketAddress(PORT), 0
+        );
 
-
-        // Calculate API
         server.createContext(
                 "/calculate",
                 GradeCalculatorServer::calculate
         );
 
-
-        // CORS
         server.createContext(
                 "/",
                 GradeCalculatorServer::handleOptions
         );
 
-
         server.setExecutor(null);
-
-
         server.start();
-
 
         System.out.println("======================================");
         System.out.println("     STUDENT GRADE CALCULATOR");
         System.out.println("======================================");
         System.out.println("Backend started successfully!");
-        System.out.println(
-                "Running at: http://localhost:" + PORT
-        );
-        System.out.println(
-                "Waiting for frontend requests..."
-        );
+        System.out.println("Running at: http://localhost:" + PORT);
+        System.out.println("Waiting for frontend requests...");
     }
 
-
-    // ==========================================
-    // CALCULATE
-    // ==========================================
-
-    private static void calculate(
-            HttpExchange exchange
-    ) throws IOException {
-
+    // CALCULATE RESULT
+    private static void calculate(HttpExchange exchange)
+            throws IOException {
 
         addCorsHeaders(exchange);
 
-
-        if ("OPTIONS".equalsIgnoreCase(
-                exchange.getRequestMethod())) {
-
-            exchange.sendResponseHeaders(
-                    204,
-                    -1
-            );
-
+        if ("OPTIONS".equalsIgnoreCase(exchange.getRequestMethod())) {
+            exchange.sendResponseHeaders(204, -1);
             return;
         }
 
+        if (!"GET".equalsIgnoreCase(exchange.getRequestMethod())) {
+            sendJson(exchange, 405,
+                    "{\"message\":\"Method not allowed.\"}");
+            return;
+        }
 
         try {
+            String query = exchange.getRequestURI().getRawQuery();
 
-            String query =
-                    exchange.getRequestURI()
-                            .getQuery();
+            double mark1 = getMark(query, "mark1");
+            double mark2 = getMark(query, "mark2");
+            double mark3 = getMark(query, "mark3");
+            double mark4 = getMark(query, "mark4");
+            double mark5 = getMark(query, "mark5");
 
+            double total = mark1 + mark2 + mark3 + mark4 + mark5;
+            double percentage = total / 5.0;
 
-            // Get marks
-            double mark1 =
-                    getMark(query, "mark1");
+            String grade = calculateGrade(percentage);
 
-            double mark2 =
-                    getMark(query, "mark2");
-
-            double mark3 =
-                    getMark(query, "mark3");
-
-            double mark4 =
-                    getMark(query, "mark4");
-
-            double mark5 =
-                    getMark(query, "mark5");
-
-
-            // ======================================
-            // TOTAL
-            // ======================================
-
-            double total =
-                    mark1 +
-                    mark2 +
-                    mark3 +
-                    mark4 +
-                    mark5;
-
-
-            // ======================================
-            // AVERAGE PERCENTAGE
-            // ======================================
-
-            double percentage =
-                    total / 5;
-
-
-            // ======================================
-            // GRADE
-            // ======================================
-
-            String grade =
-                    calculateGrade(percentage);
-
-
-            // ======================================
-            // JSON RESPONSE
-            // ======================================
-
-            String json =
-                    "{"
+            String json = "{"
                     + "\"total\":" + format(total) + ","
                     + "\"percentage\":" + format(percentage) + ","
                     + "\"grade\":\"" + grade + "\""
                     + "}";
 
+            sendJson(exchange, 200, json);
 
-            sendJson(
-                    exchange,
-                    200,
-                    json
-            );
+            System.out.println("Total: " + total);
+            System.out.println("Percentage: " + percentage + "%");
+            System.out.println("Grade: " + grade);
 
+        } catch (IllegalArgumentException e) {
+            sendJson(exchange, 400,
+                    "{\"message\":\"" + e.getMessage() + "\"}");
 
-            System.out.println(
-                    "Marks: "
-                    + mark1 + ", "
-                    + mark2 + ", "
-                    + mark3 + ", "
-                    + mark4 + ", "
-                    + mark5
-            );
-
-            System.out.println(
-                    "Total: " + total
-            );
-
-            System.out.println(
-                    "Percentage: " + percentage + "%"
-            );
-
-            System.out.println(
-                    "Grade: " + grade
-            );
-
-        }
-
-        catch (Exception e) {
-
+        } catch (Exception e) {
             e.printStackTrace();
 
-            sendJson(
-                    exchange,
-                    400,
-                    "{\"message\":\"Invalid marks.\"}"
-            );
+            sendJson(exchange, 500,
+                    "{\"message\":\"Internal server error.\"}");
         }
     }
 
+    // GET AND VALIDATE MARKS
+    private static double getMark(String query, String name) {
 
-    // ==========================================
-    // GET MARK
-    // ==========================================
-
-    private static double getMark(
-            String query,
-            String name
-    ) {
-
-        if (query == null) {
+        if (query == null || query.isEmpty()) {
             throw new IllegalArgumentException(
-                    "Missing query"
-            );
+                    "Missing marks. Please enter all five subjects.");
         }
 
-
-        String[] parameters =
-                query.split("&");
-
+        String[] parameters = query.split("&");
 
         for (String parameter : parameters) {
+            String[] pair = parameter.split("=", 2);
 
-            String[] pair =
-                    parameter.split("=");
+            if (pair.length == 2 && pair[0].equals(name)) {
+                try {
+                    double mark = Double.parseDouble(pair[1]);
 
+                    if (!Double.isFinite(mark) || mark < 0 || mark > 100) {
+                        throw new IllegalArgumentException(
+                                "Marks must be between 0 and 100.");
+                    }
 
-            if (pair.length == 2
-                    && pair[0].equals(name)) {
+                    return mark;
 
-                double mark =
-                        Double.parseDouble(pair[1]);
-
-
-                if (mark < 0 || mark > 100) {
-
+                } catch (NumberFormatException e) {
                     throw new IllegalArgumentException(
-                            "Marks must be 0-100"
-                    );
+                            "Please enter valid numeric marks.");
                 }
-
-
-                return mark;
             }
         }
 
-
         throw new IllegalArgumentException(
-                "Missing " + name
-        );
+                "Missing marks for " + name + ".");
     }
 
-
-    // ==========================================
     // GRADE CALCULATION
-    // ==========================================
-
-    private static String calculateGrade(
-            double percentage
-    ) {
+    private static String calculateGrade(double percentage) {
 
         if (percentage >= 90) {
             return "A+";
-        }
-
-        else if (percentage >= 80) {
+        } else if (percentage >= 80) {
             return "A";
-        }
-
-        else if (percentage >= 70) {
+        } else if (percentage >= 70) {
             return "B";
-        }
-
-        else if (percentage >= 60) {
+        } else if (percentage >= 60) {
             return "C";
-        }
-
-        else if (percentage >= 50) {
+        } else if (percentage >= 50) {
             return "D";
-        }
-
-        else {
+        } else {
             return "F";
         }
     }
 
-
-    // ==========================================
-    // FORMAT NUMBER
-    // ==========================================
-
-    private static String format(
-            double number
-    ) {
-
-        if (number == (long) number) {
-
-            return String.valueOf(
-                    (long) number
-            );
-        }
-
-        return String.format(
-                "%.2f",
-                number
-        );
+    // FORMAT NUMBERS
+    private static String format(double number) {
+        return String.format(Locale.US, "%.2f", number);
     }
 
-
-    // ==========================================
-    // CORS
-    // ==========================================
-
-    private static void addCorsHeaders(
-            HttpExchange exchange
-    ) {
+    // CORS HEADERS
+    private static void addCorsHeaders(HttpExchange exchange) {
 
         exchange.getResponseHeaders().set(
-                "Access-Control-Allow-Origin",
-                "*"
-        );
+                "Access-Control-Allow-Origin", "*");
 
         exchange.getResponseHeaders().set(
-                "Access-Control-Allow-Methods",
-                "GET, OPTIONS"
-        );
+                "Access-Control-Allow-Methods", "GET, OPTIONS");
 
         exchange.getResponseHeaders().set(
-                "Access-Control-Allow-Headers",
-                "Content-Type"
-        );
+                "Access-Control-Allow-Headers", "Content-Type");
     }
 
-
-    // ==========================================
-    // OPTIONS
-    // ==========================================
-
-    private static void handleOptions(
-            HttpExchange exchange
-    ) throws IOException {
+    // HANDLE OPTIONS REQUEST
+    private static void handleOptions(HttpExchange exchange)
+            throws IOException {
 
         addCorsHeaders(exchange);
 
-        exchange.sendResponseHeaders(
-                204,
-                -1
-        );
+        if ("OPTIONS".equalsIgnoreCase(exchange.getRequestMethod())) {
+            exchange.sendResponseHeaders(204, -1);
+        } else {
+            sendJson(exchange, 404,
+                    "{\"message\":\"Endpoint not found.\"}");
+        }
+
+        exchange.close();
     }
 
-
-    // ==========================================
-    // SEND JSON
-    // ==========================================
-
+    // SEND JSON RESPONSE
     private static void sendJson(
             HttpExchange exchange,
             int statusCode,
             String json
     ) throws IOException {
 
+        addCorsHeaders(exchange);
 
-        byte[] response =
-                json.getBytes(
-                        StandardCharsets.UTF_8
-                );
-
+        byte[] response = json.getBytes(StandardCharsets.UTF_8);
 
         exchange.getResponseHeaders().set(
-                "Content-Type",
-                "application/json"
-        );
+                "Content-Type", "application/json; charset=UTF-8");
 
+        exchange.sendResponseHeaders(statusCode, response.length);
 
-        exchange.sendResponseHeaders(
-                statusCode,
-                response.length
-        );
-
-
-        try (
-                OutputStream output =
-                        exchange.getResponseBody()
-        ) {
-
+        try (OutputStream output = exchange.getResponseBody()) {
             output.write(response);
         }
     }
